@@ -8,7 +8,7 @@ from langchain_core.callbacks import (
     CallbackManagerForToolRun,
 )
 from sqlalchemy.engine import Result
-
+from functools import cache
 
 class _InfoSQLDatabaseToolInput(BaseModel):
     table_names: str = Field(
@@ -29,6 +29,7 @@ class InfoSnowflakeTableTool(BaseTool):
 
     db: SQLDatabase = Field(exclude=True)
 
+    @cache
     def _run(
         self,
         table_names: str,
